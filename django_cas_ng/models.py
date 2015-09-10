@@ -2,6 +2,7 @@
 # ⁻*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.contrib.sessions.models import Session
 from .utils import (get_cas_client, get_service_url)
 
@@ -11,23 +12,27 @@ class ProxyError(ValueError):
 
 
 class ProxyGrantingTicket(models.Model):
+    
     class Meta:
         unique_together = ('session', 'user')
+    
     session = models.ForeignKey(
         Session,
         related_name="+",
         blank=True,
         null=True
     )
+    
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         related_name="+",
         null=True,
         blank=True
     )
+    
     pgtiou = models.CharField(max_length=255, null=True, blank=True)
     pgt = models.CharField(max_length=255, null=True, blank=True)
-    date = models.DateTimeField(auto_now_add=True, auto_now=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     @classmethod
     def retrieve_pt(cls, request):
@@ -54,5 +59,5 @@ class ProxyGrantingTicket(models.Model):
 
 
 class SessionTicket(models.Model):
-    session = models.ForeignKey(Session, related_name="+", unique=True)
+    session = models.OneToOneField(Session, related_name="+")
     ticket = models.CharField(max_length=255)
