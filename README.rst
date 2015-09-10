@@ -29,7 +29,7 @@ Install with `pip`_::
 
 Install the latest code::
 
-    pip install https://github.com/mingchen/django-cas-ng/archive/master.zip
+    pip install https://github.com/mkoskela/django-cas-ng/archive/master.zip
 
 
 Install from source code::

@@ -1,7 +1,6 @@
 # Stub for pre django 1.7 apps.
 # ⁻*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.sessions.models import Session
 from .utils import (get_cas_client, get_service_url)
